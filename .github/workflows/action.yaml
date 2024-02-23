@@ -26,7 +26,9 @@ jobs:
             -p 7900:7900 \
             --shm-size="2g" \
             selenium/standalone-chrome:latest
-
+      
+      - name: Create report dir
+        run: mkdir logs
       - name: Run tests
         run: bundle exec cucumber
   # Deploy to GitHub Pages
