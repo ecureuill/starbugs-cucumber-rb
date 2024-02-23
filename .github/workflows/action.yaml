@@ -1,0 +1,38 @@
+name: CI/CD com Cucumber e Selenium
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Ruby
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
+
+    - name: Install dependencies
+      run: bundle install
+
+    - name: Start Selenium container
+      run: docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome
+
+    - name: Run smoke tests
+      uses: bundle exec cucumber
+
+    - name: Publish on GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: /logs
+        force_orphan: true

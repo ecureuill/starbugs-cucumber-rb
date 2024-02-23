@@ -1,0 +1,6 @@
+default: -p progress -p quiet -p report
+smoke: -p progress -p quiet -p report -t @smoke
+
+progress: -f progress
+report: --publish-quiet  -f html -o logs/report.html
+quiet: --publish-quiet
