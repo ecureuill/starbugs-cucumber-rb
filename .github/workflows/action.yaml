@@ -34,14 +34,17 @@ jobs:
   # Deploy to GitHub Pages
   deploy:
     runs-on: ubuntu-latest
-    if: always() 
     needs: test 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2      
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          source: /logs
+          path: ./logs/
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
