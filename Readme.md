@@ -1,29 +1,36 @@
-## Starbugs Coffee Acceptance Test Automation
+![alt text](.github/image.jpg)
+
+# Starbugs Coffee Acceptance Test Automation
 
 This project automates acceptance tests for the [Starbugs Coffee website](http://starbugs.vercel.app). It was created as part of the **BDD Discover** course at the [QaX school](http://www.qax.com.br).
 
-**Acceptance Tests**
+## Test Reports
 
-Acceptance tests verify that a software system meets the business requirements and user expectations. They are typically written in a natural language that is understandable to non-technical stakeholders.
+The project generates a comprehensive test report after each execution. You can find the report at the [project's github page](https://ecureuill.github.io/starbugs-cucumber-rb/report.html).
 
-**Technologies Used**
+## Technologies Used
 
 * **Cucumber:** A behavior-driven development (BDD) framework that allows you to write tests in a natural language.
 * **Capybara:** A DSL for web automation
 * **RSpec:** A testing framework for Ruby.
 * **Selenium:**  WebDriver for browser automation
 
-**Project Structure**
+## Acceptance Tests
+
+Acceptance tests verify that a software system meets the business requirements and user expectations. They are typically written in a natural language that is understandable to non-technical stakeholders.
+
+
+## Project Structure
 
 The project is structured using the Page Object Model (POM) pattern. The POM pattern organizes test code into logical units based on the pages of the application under test.
 
-**Docker Containers**
+## Docker Containers
 
 The project uses a Seleniumm Grid container to run the test on a remote browser.
 
 **Selenium Grid:** A tool that allows you to run Selenium tests in parallel on multiple machines.
 
-**Getting Started**
+## Getting Started
 
 To get started with the project, follow these steps:
 
