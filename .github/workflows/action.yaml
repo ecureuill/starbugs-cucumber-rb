@@ -1,4 +1,4 @@
-name: CI/CD com Cucumber e Selenium
+name: CI/CD with Cucumber and Selenium
 
 on:
   push:
@@ -7,42 +7,37 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Setup Ruby
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2.2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+      
+      - name: Install dependencies
+        run: bundle install
 
-    - name: Install dependencies
-      run: bundle install
+      - name: Start Selenium container
+        run: |
+          docker run -d \
+            -p 4444:4444 \
+            -p 7900:7900 \
+            --shm-size="2g" \
+            selenium/standalone-chrome:latest
 
-    - name: Start Selenium container
-      run: docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome
-
-    - name: Run smoke tests
-      run: bundle exec cucumber
-
-    # Configure Pages
-    - name: Configure GitHub Pages
-      if: always()
-      uses: actions/configure-pages@v3
-    # Upload the report as a pages artifact
-    - name: Upload Pages Artifact
-      if: always()
-      uses: actions/upload-pages-artifact@v2
-      with:
-        path: logs/
-  # Deploy the Pages site
+      - name: Run tests
+        run: bundle exec cucumber
+  # Deploy to GitHub Pages
   deploy:
-    if: always()
-    needs: test
+    runs-on: ubuntu-latest
+    if: always() 
+    needs: test 
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v2      
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2      
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          source: /logs
