@@ -5,13 +5,9 @@ on:
     branches: [main]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16]
-        
+    
     steps:
     - uses: actions/checkout@v3
 
@@ -29,9 +25,24 @@ jobs:
     - name: Run smoke tests
       run: bundle exec cucumber
 
-    - name: Publish on GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    # Configure Pages
+    - name: Configure GitHub Pages
+      if: always()
+      uses: actions/configure-pages@v3
+    # Upload the report as a pages artifact
+    - name: Upload Pages Artifact
+      if: always()
+      uses: actions/upload-pages-artifact@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: /logs
-        force_orphan: true
+        path: logs/
+  # Deploy the Pages site
+  deploy:
+    if: always()
+    needs: test
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v2      
