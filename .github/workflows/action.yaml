@@ -2,8 +2,7 @@ name: CI/CD com Cucumber e Selenium
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build-and-test:
@@ -12,7 +11,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16]
-
+        
     steps:
     - uses: actions/checkout@v3
 
@@ -28,7 +27,7 @@ jobs:
       run: docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome
 
     - name: Run smoke tests
-      uses: bundle exec cucumber
+      run: bundle exec cucumber
 
     - name: Publish on GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
