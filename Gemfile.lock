@@ -41,7 +41,6 @@ GEM
     cucumber-messages (22.0.0)
     cucumber-tag-expressions (5.0.6)
     diff-lcs (1.5.1)
-    dotenv (3.0.2)
     ffi (1.16.3)
     matrix (0.4.2)
     mini_mime (1.1.5)
@@ -54,7 +53,7 @@ GEM
       racc (~> 1.4)
     public_suffix (5.0.4)
     racc (1.7.3)
-    rack (3.0.9)
+    rack (3.0.9.1)
     rack-test (2.1.0)
       rack (>= 1.3)
     regexp_parser (2.9.0)
@@ -92,7 +91,6 @@ PLATFORMS
 DEPENDENCIES
   capybara
   cucumber
-  dotenv
   rspec
   selenium-webdriver
   yaml
