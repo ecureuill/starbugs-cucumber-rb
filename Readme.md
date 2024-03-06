@@ -63,7 +63,7 @@ SELENIUM_HOST: localhost
 SELENIUM_PORT: 4444
 
 #tested app
-BASE_URL: http://starbugs-qa.vercel.com
+BASE_URL: http://starbugs-qa.vercel.app
 ```
 4.  Run test
 ```bash
